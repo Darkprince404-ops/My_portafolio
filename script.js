@@ -564,10 +564,6 @@
         if (storyOmni) storyOmni.textContent = `portfolio://story/${String(selected + 1).padStart(2, '0')}`;
         if (storyMedia) storyMedia.classList.remove('is-changing');
       }, smooth ? 120 : 0);
-
-      if (matchMedia('(max-width: 720px)').matches) {
-        cards[selected]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
-      }
     };
 
     const placeCards = () => {
@@ -605,7 +601,12 @@
       const normalized = (index + stories.length) % stories.length;
       updateStory(normalized);
       placeCards();
-      if (fromUser) userLockUntil = performance.now() + 9000;
+      if (fromUser) {
+        userLockUntil = performance.now() + 9000;
+        if (matchMedia('(max-width: 720px)').matches) {
+          cards[normalized]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
       lastAuto = performance.now();
     };
 
