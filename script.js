@@ -99,6 +99,42 @@
     gObs.observe(galleryWrap);
   }
 
+  // Neon-backed contact form. The database credential remains on the server.
+  const contactForm = document.querySelector('#contact-form');
+  const contactStatus = document.querySelector('#contact-status');
+  if (contactForm && contactStatus) {
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!contactForm.reportValidity()) return;
+
+      const submit = contactForm.querySelector('button[type="submit"]');
+      const payload = Object.fromEntries(new FormData(contactForm).entries());
+      submit.disabled = true;
+      submit.setAttribute('aria-busy', 'true');
+      contactStatus.textContent = 'Sending…';
+      contactStatus.dataset.state = 'loading';
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Message could not be sent.');
+        contactForm.reset();
+        contactStatus.textContent = 'Message received. I’ll get back to you soon.';
+        contactStatus.dataset.state = 'success';
+      } catch (error) {
+        contactStatus.textContent = error.message || 'Something went wrong. Please email me directly.';
+        contactStatus.dataset.state = 'error';
+      } finally {
+        submit.disabled = false;
+        submit.removeAttribute('aria-busy');
+      }
+    });
+  }
+
   // Section-aware header state.
   const header = document.querySelector('.site-header');
   const contact = document.querySelector('#contact');
