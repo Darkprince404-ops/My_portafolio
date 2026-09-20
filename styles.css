@@ -1314,3 +1314,280 @@ button:focus-visible{outline-offset:3px}
   .cyber-fade-up,.cyber-pull-word{opacity:1!important;transform:none!important;filter:none!important}
   .library-card,.library-story-media img{transition:none!important}
 }
+
+
+/* SCALE CORRECTION / LIBRARY DENSITY
+   Tightens the portfolio so the visual rhythm matches the supplied references. */
+:root{
+  --max:1280px;
+  --gutter:clamp(16px,2.6vw,36px);
+}
+
+.section{padding:clamp(66px,7vw,108px) 0}
+.section-label{font-size:.62rem;margin-bottom:24px}
+.display{font-size:clamp(2.55rem,5.4vw,6rem);line-height:.92}
+
+.manifesto{padding-top:clamp(82px,9vw,130px)}
+.manifesto-title{font-size:clamp(2.55rem,5vw,5.8rem)}
+.manifesto-notes{margin-top:60px}
+.note{min-height:190px;padding:22px 20px 26px 0}
+.note strong{font-size:1.06rem;margin:38px 0 10px}
+.note p{font-size:.79rem}
+
+.work-intro{padding-bottom:48px}
+.work-intro-copy{margin-top:22px;font-size:.9rem}
+.case-list{gap:14px}
+.case-card{
+  min-height:430px;
+  padding:26px;
+  border-radius:28px;
+  grid-template-columns:58px minmax(0,1.05fr) minmax(280px,.95fr);
+  gap:22px;
+}
+.case-num{font-size:1.55rem}
+.case-main h3{font-size:clamp(2.05rem,3.6vw,4.35rem);margin:13px 0 16px}
+.case-main p{font-size:.84rem;margin-bottom:20px}
+.case-visual{min-height:300px;border-radius:21px}
+.metric-big{font-size:clamp(3.5rem,6vw,6.8rem)}
+.more-work{padding-top:70px!important}
+
+.proof-inner{padding-bottom:clamp(76px,8vw,120px)}
+.proof-grid{margin-top:40px}
+.proof-card{min-height:290px;padding:22px;border-radius:23px}
+.proof-card-large{min-height:400px}
+.proof-card strong{font-size:clamp(1.55rem,2.7vw,3rem);margin:32px 0 14px}
+.proof-card p{font-size:.82rem}
+
+.timeline-head{margin-bottom:48px}
+.timeline-row{grid-template-columns:130px minmax(0,1fr) 150px;padding:20px 0}
+.timeline-row h3{font-size:clamp(1.25rem,1.9vw,2rem)}
+.timeline-row p{font-size:.8rem}
+
+.voice-inner{padding-top:82px;padding-bottom:82px}
+.quote{min-height:330px;padding:24px;border-radius:24px}
+.quote p{font-size:clamp(1.75rem,3vw,3.55rem)}
+
+.credentials-head{margin-bottom:42px}
+.credential{grid-template-columns:180px 1fr;padding:16px 0}
+.credential strong{font-size:clamp(1.02rem,1.6vw,1.35rem)}
+
+.offer-copy{padding-bottom:88px}
+.offer-grid{margin-top:48px}
+.offer h3{font-size:1.2rem;margin:28px 0 8px}
+.offer p{font-size:.78rem}
+
+.contact-section{padding:18px}
+.contact-shell{
+  min-height:66vh;
+  border-radius:28px;
+  padding:clamp(30px,4.8vw,64px);
+  gap:clamp(28px,5vw,72px);
+}
+.contact-form{border-radius:23px;padding:22px}
+
+/* The reference uses a compact, dense visual arc with the browser mock crossing it. */
+.story-library{
+  padding:clamp(78px,7vw,110px) 0 clamp(72px,7vw,105px);
+  min-height:820px;
+}
+.library-shell{width:min(calc(100% - 28px),1120px)}
+.library-head>span{font-size:.58rem}
+.library-head h2{font-size:clamp(2.25rem,4.5vw,4.25rem);margin:9px 0 8px}
+.library-head p{font-size:.78rem;max-width:500px}
+.library-stage{height:610px;margin-top:8px}
+.library-ring-scene{
+  height:330px;
+  perspective:760px;
+  perspective-origin:50% 96%;
+}
+.library-card{
+  top:64%;
+  width:124px;
+  height:190px;
+  margin:-95px 0 0 -62px;
+  border-radius:13px;
+}
+.library-card span{
+  left:7px;right:7px;bottom:7px;
+  padding:5px 6px;border-radius:7px;
+  font-size:6.8px;
+}
+.library-browser{
+  left:9%;
+  right:9%;
+  top:276px;
+  height:334px;
+  border-radius:23px 23px 14px 14px;
+}
+.library-browser-bar{height:38px}
+.library-dots{left:18px;top:15px}
+.library-dots i{width:7px;height:7px}
+.library-omni{top:7px;height:24px;width:min(340px,46%)}
+.library-tools{right:18px;top:12px;font-size:10px}
+.library-story{height:calc(100% - 38px);grid-template-columns:1.32fr .68fr}
+.library-story-copy{padding:clamp(22px,3vw,38px)}
+.library-story-copy h3{
+  font-size:clamp(1.5rem,2.4vw,2.55rem);
+  margin:26px 0 13px;
+}
+.library-story-copy p{font-size:.75rem;line-height:1.5}
+.library-story-meta{padding-top:16px;font-size:.55rem}
+.library-story-controls{margin-top:11px}
+.library-story-controls button{width:33px;height:33px}
+.library-hint{margin-top:16px;font-size:.5rem}
+
+/* Desktop hero also gets a slight optical reduction. */
+@media (min-width:861px){
+  .cyber-ui{padding-top:clamp(102px,10vh,126px);padding-bottom:32px}
+  .cyber-copy{max-width:520px}
+  .cyber-title{font-size:clamp(2rem,4.05vw,4.05rem)}
+  .cyber-lede{font-size:12.5px;max-width:390px;margin-top:18px}
+  .cyber-product{width:min(320px,100%);grid-template-columns:82px 1fr}
+  .cyber-product-thumb{width:82px;min-height:82px}
+  .cyber-specs{width:min(350px,100%);padding:15px 17px}
+}
+
+/* Mobile: materially smaller type, cards and vertical spacing. */
+@media (max-width:860px){
+  .section{width:calc(100% - 24px);padding:58px 0}
+  .section-label{font-size:.54rem;margin-bottom:17px;gap:8px}
+  .section-label::before{width:18px}
+  .display{font-size:clamp(2rem,10vw,3.15rem);line-height:.94;letter-spacing:-.055em}
+
+  .manifesto{padding-top:66px}
+  .manifesto-grid{gap:15px}
+  .manifesto-small{font-size:.75rem}
+  .manifesto-title{font-size:clamp(2.05rem,10.5vw,3.35rem);line-height:.96}
+  .manifesto-notes{margin-top:38px}
+  .note{min-height:132px;padding:16px 0 18px}
+  .note strong{font-size:.98rem;margin:22px 0 7px}
+  .note p{font-size:.73rem;line-height:1.45}
+
+  .work-intro{padding-bottom:30px}
+  .work-intro-copy{font-size:.78rem;margin-top:16px}
+  .case-list{width:calc(100% - 20px);gap:10px}
+  .case-card{padding:16px;border-radius:20px;gap:13px}
+  .case-num{font-size:.92rem}
+  .case-kicker{font-size:.52rem}
+  .case-main h3{font-size:clamp(1.72rem,8.6vw,2.3rem);line-height:.95;margin:9px 0 11px}
+  .case-main p{font-size:.72rem;line-height:1.45;margin-bottom:14px}
+  .case-tags{gap:5px}
+  .case-tags span{font-size:.5rem;padding:5px 7px}
+  .case-visual{min-height:205px;border-radius:16px}
+  .visual-terminal{padding:18px}
+  .visual-terminal code{font-size:.7rem;line-height:1.65}
+  .metric-big{font-size:3.5rem}
+  .metric-caption{font-size:.55rem;margin-top:10px}
+  .metric-bars{height:72px;margin-top:16px}
+  .more-work{padding-top:48px!important}
+
+  .proof-inner{padding-bottom:58px}
+  .proof-head{gap:14px}
+  .proof-head p{font-size:.76rem}
+  .proof-grid{margin-top:26px;gap:9px}
+  .proof-card,.proof-card-large{min-height:220px;padding:17px;border-radius:18px}
+  .proof-source{font-size:.5rem}
+  .proof-card strong{font-size:clamp(1.35rem,7vw,1.95rem);margin:24px 0 10px}
+  .proof-card p{font-size:.72rem;margin-bottom:14px}
+  .proof-card b{font-size:.58rem}
+
+  .timeline-head{gap:14px;margin-bottom:30px}
+  .timeline-head p{font-size:.76rem}
+  .timeline-row{padding:14px 0;gap:8px}
+  .timeline-row time,.timeline-row>span{font-size:.55rem}
+  .timeline-row h3{font-size:1.15rem;margin-bottom:5px}
+  .timeline-row p{font-size:.71rem;line-height:1.45}
+
+  .voice-inner{padding-top:58px;padding-bottom:58px}
+  .quotes{gap:10px}
+  .quote{min-height:230px;padding:18px;border-radius:19px}
+  .quote p{font-size:clamp(1.55rem,8vw,2.1rem)}
+  .quote footer{font-size:.66rem}
+
+  .credentials-head{gap:14px;margin-bottom:28px}
+  .credentials-head p{font-size:.74rem}
+  .credential{padding:12px 0}
+  .credential span{font-size:.54rem}
+  .credential strong{font-size:1rem}
+
+  .offer-copy{padding-bottom:64px}
+  .offer-grid{margin-top:34px;gap:8px}
+  .offer{padding-top:12px}
+  .offer>span{font-size:.54rem}
+  .offer h3{font-size:1.05rem;margin:20px 0 6px}
+  .offer p{font-size:.7rem}
+
+  .contact-section{padding:6px}
+  .contact-shell{min-height:auto;padding:38px 15px 22px;border-radius:21px}
+  .contact-copy>p{font-size:.75rem}
+  .contact-email{font-size:.88rem;margin-top:16px}
+  .contact-links{font-size:.65rem;margin-top:18px}
+  .contact-form{padding:16px;border-radius:18px;gap:11px}
+  .contact-form input,.contact-form textarea{padding:11px 12px;border-radius:11px}
+  .contact-form textarea{min-height:100px}
+  .site-footer{font-size:.6rem;padding-top:16px}
+
+  .cyber-ui{padding-top:max(88px,env(safe-area-inset-top));gap:18px}
+  .cyber-title{font-size:clamp(1.48rem,7.7vw,2rem);line-height:.98}
+  .cyber-kicker{font-size:8px;margin-bottom:10px}
+  .cyber-lede{font-size:11px;line-height:1.48;margin-top:11px}
+  .cyber-socials{margin-top:12px}
+  .cyber-icon-btn{width:32px;height:32px}
+  .cyber-icon-btn svg{width:14px;height:14px}
+  .cyber-left{gap:16px}
+  .cyber-product{grid-template-columns:64px 1fr;gap:7px 10px;padding:8px;border-radius:13px}
+  .cyber-product-thumb{width:64px;min-height:64px;border-radius:8px}
+  .cyber-product h2{font-size:8.5px}
+  .cyber-product p{font-size:9.5px;line-height:1.35}
+  .cyber-contact{font-size:9.5px;padding:5px 10px}
+  .cyber-specs{padding:11px 13px;border-radius:13px}
+  .cyber-specs h3{font-size:8.5px;margin-bottom:7px}
+  .cyber-spec-row{padding:5px 0}
+  .cyber-spec-label,.cyber-spec-value{font-size:9px}
+  .cyber-page{top:89px;font-size:8.5px}
+
+  .story-library{padding:62px 0 58px}
+  .library-shell{width:calc(100% - 12px)}
+  .library-head>span{font-size:.5rem}
+  .library-head h2{font-size:clamp(1.85rem,11vw,2.75rem);margin:7px 0 5px}
+  .library-head p{font-size:.68rem;max-width:310px}
+  .library-stage{margin-top:14px}
+}
+
+@media (max-width:720px){
+  .library-ring-scene{height:164px}
+  .library-ring{gap:6px;padding:6px 42vw 10px 6px}
+  .library-card{
+    width:88px!important;height:134px!important;flex-basis:88px!important;
+    border-radius:10px;
+  }
+  .library-card span{left:5px;right:5px;bottom:5px;padding:4px;font-size:5.5px}
+  .library-browser{
+    min-height:430px;
+    border-radius:17px;
+    margin-top:-8px;
+  }
+  .library-browser-bar{height:34px}
+  .library-dots{left:12px;top:13px;gap:3px}
+  .library-dots i{width:6px;height:6px}
+  .library-omni{height:22px;top:6px;width:62%}
+  .library-omni span{font-size:7px}
+  .library-story{min-height:396px;grid-template-rows:178px auto}
+  .library-story-copy{padding:18px 16px 18px}
+  .library-story-topline{font-size:.48rem}
+  .library-story-copy h3{font-size:1.45rem;margin:15px 0 9px}
+  .library-story-copy p{font-size:.68rem;line-height:1.45}
+  .library-story-meta{margin-top:16px;padding-top:12px;font-size:.48rem}
+  .library-story-controls{margin-top:10px}
+  .library-story-controls button{width:30px;height:30px}
+  .library-hint{font-size:.44rem;margin-top:12px}
+}
+
+@media (max-width:480px){
+  .topbar{padding:8px 9px 8px 11px}
+  .topbar nav{gap:8px;font-size:.63rem}
+  .topbar nav .nav-pill{padding:7px 9px}
+  .display{font-size:clamp(1.9rem,10vw,2.55rem)}
+  .case-main h3{font-size:1.82rem}
+  .contact-copy .display{font-size:2rem}
+}
