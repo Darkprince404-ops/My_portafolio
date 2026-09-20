@@ -174,10 +174,10 @@ button{color:inherit}
 .field-photo{position:absolute;inset:0;margin:0;opacity:0;transform:scale(1.08);transition:opacity .65s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
 .field-photo.active{opacity:1;transform:scale(1)}
 .field-photo img{width:100%;height:100%;object-fit:cover}
-.field-photo:nth-child(1) img{object-position:center}
-.field-photo:nth-child(2) img{object-position:center 28%}
-.field-photo:nth-child(3) img{object-position:center 20%}
-.field-photo:nth-child(4) img{object-position:center}
+.field-photo:nth-child(1) img{object-position:center 44%}
+.field-photo:nth-child(2) img{object-position:68% center}
+.field-photo:nth-child(3) img{object-position:60% center}
+.field-photo:nth-child(4) img{object-position:center 45%}
 .field-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.42));pointer-events:none}
 .field-index{position:absolute;bottom:20px;right:22px;z-index:4;color:white;font-size:.7rem;letter-spacing:.12em}
 .field-index span{font-size:2rem;font-weight:900;letter-spacing:-.06em}
