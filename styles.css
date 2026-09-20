@@ -627,7 +627,7 @@ button:focus-visible{outline-offset:3px}
   opacity:0;
   transition:opacity .35s ease;
 }
-.case-card>*{position:relative;z-index:1}
+.case-card>.case-num,.case-card>.case-main,.case-card>.case-visual,.case-card>.case-open{z-index:1}
 .case-card:hover{
   transform:translateY(-6px);
   border-color:rgba(111,245,255,.18);
@@ -709,9 +709,7 @@ button:focus-visible{outline-offset:3px}
   z-index:1;
 }
 .mini-project>*,
-.proof-card>*,
-.practice-media>*,
-.community-shot>*{position:relative;z-index:2}
+.proof-card>*{position:relative;z-index:2}
 .mini-project:hover{
   transform:translateY(-4px);
   background:rgba(255,255,255,.035);
