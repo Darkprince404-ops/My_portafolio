@@ -163,8 +163,8 @@
       contribution: 'Product framing, UI direction, iterative development, AI interaction design, testing and deployment workflows across the portal and assistant experience.',
       stack: 'React 19, TypeScript, Vite, NestJS, Prisma, JWT, Three.js, Framer Motion and AI integrations.',
       result: 'A working platform spanning protected dashboards, attendance, fees, course materials, quizzes, calendar, chat and interactive AI learning experiences.',
-      link: 'https://github.com/Darkprince404-ops/benadir-univestiy-chatbot-frontend',
-      linkLabel: 'Open frontend repository ↗'
+      link: 'mailto:hassanabdihassan21@gmail.com?subject=Request%20B24%20private%20demo',
+      linkLabel: 'Request private demo ↗'
     },
     bossbaby: {
       kicker: 'ERP / POS / OPERATIONS',
@@ -174,8 +174,8 @@
       contribution: 'Product development, POS and inventory workflows, reporting logic, data migration, quality gates, deployment and iterative operational fixes.',
       stack: 'Next.js, PostgreSQL, role-based access, reporting/BI, audit trails and deployment workflows.',
       result: 'A system covering variant inventory, POS, supplier workflows, credit, returns, transfers, expenses, fiscal reporting and legacy Excel migration.',
-      link: 'https://github.com/Darkprince404-ops/Boss_baby',
-      linkLabel: 'Open repository ↗'
+      link: 'mailto:hassanabdihassan21@gmail.com?subject=Request%20Boss%20Baby%20private%20demo',
+      linkLabel: 'Request private demo ↗'
     },
     i24: {
       kicker: 'AGRITECH / IOT / PRODUCT RESEARCH',
