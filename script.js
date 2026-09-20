@@ -52,7 +52,7 @@
   const meter = document.querySelector('.scroll-meter span');
   const topbar = document.querySelector('#topbar');
   const portraitFrame = document.querySelector('.portrait-frame');
-  const darkSections = document.querySelectorAll('.work-section, .timeline-section, .voice-section, .contact-section');
+  const darkSections = document.querySelectorAll('.cyber-hero, .work-section, .story-library, .timeline-section, .voice-section, .contact-section');
   const parallaxEnabled = Boolean(portraitFrame && finePointer && !reduceMotion && !compactViewport);
   let raf = 0;
 
@@ -129,12 +129,108 @@
   document.addEventListener('visibilitychange', syncVisibility);
   syncVisibility();
   // Pause continuous hero motion while it is off-screen to reduce unnecessary work.
-  const hero = document.querySelector('.hero');
+  const hero = document.querySelector('.cyber-hero');
   if (hero && !reduceMotion && 'IntersectionObserver' in window) {
     const heroMotionObserver = new IntersectionObserver(([entry]) => {
       hero.classList.toggle('motion-paused', !entry.isIntersecting);
     }, { rootMargin: '120px 0px 120px 0px', threshold: 0 });
     heroMotionObserver.observe(hero);
+  }
+
+  // Cyber hero spotlight + text entrance.
+  const cyberHero = document.querySelector('.cyber-hero');
+  const cyberReveal = document.querySelector('#cyberReveal');
+
+  if (cyberHero && cyberReveal) {
+    const setCyberMask = (clientX, clientY) => {
+      const rect = cyberReveal.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      const width = window.innerWidth;
+      const radius = width < 480 ? 120 : width < 720 ? 160 : 260;
+      const mask = `radial-gradient(circle ${radius}px at ${x}px ${y}px, #fff 0%, #fff 40%, rgba(255,255,255,.75) 60%, rgba(255,255,255,.4) 75%, rgba(255,255,255,.12) 88%, transparent 100%)`;
+      cyberReveal.style.webkitMaskImage = mask;
+      cyberReveal.style.maskImage = mask;
+    };
+
+    if (finePointer && !reduceMotion) {
+      cyberHero.addEventListener('pointermove', (event) => setCyberMask(event.clientX, event.clientY), { passive: true });
+      cyberHero.addEventListener('pointerleave', () => {
+        const hidden = 'radial-gradient(circle 0px at -999px -999px, #fff, transparent)';
+        cyberReveal.style.webkitMaskImage = hidden;
+        cyberReveal.style.maskImage = hidden;
+      }, { passive: true });
+    }
+
+    if (!reduceMotion) {
+      cyberHero.addEventListener('touchmove', (event) => {
+        const touch = event.touches && event.touches[0];
+        if (touch) setCyberMask(touch.clientX, touch.clientY);
+      }, { passive: true });
+    }
+
+    let cyberWordIndex = 0;
+    document.querySelectorAll('.cyber-words-pull-up').forEach((el) => {
+      if (el.dataset.cyberSplit) return;
+      el.dataset.cyberSplit = 'true';
+
+      const directLines = el.tagName === 'H1' ? [...el.children].filter((child) => child.tagName === 'SPAN') : [];
+      if (directLines.length) {
+        directLines.forEach((line) => {
+          const words = line.textContent.trim().split(/\s+/);
+          line.textContent = '';
+          words.forEach((word, index) => {
+            const span = document.createElement('span');
+            span.className = 'cyber-pull-word';
+            span.textContent = word;
+            span.style.animationDelay = `${cyberWordIndex * 0.1}s`;
+            cyberWordIndex += 1;
+            line.appendChild(span);
+            if (index < words.length - 1) line.append(' ');
+          });
+        });
+      } else {
+        const words = el.textContent.trim().split(/\s+/);
+        el.textContent = '';
+        words.forEach((word, index) => {
+          const span = document.createElement('span');
+          span.className = 'cyber-pull-word';
+          span.textContent = word;
+          span.style.animationDelay = `${index * 0.1}s`;
+          el.appendChild(span);
+          if (index < words.length - 1) el.append(' ');
+        });
+      }
+    });
+
+    const cyberWords = document.querySelectorAll('.cyber-words-pull-up');
+    const cyberFades = document.querySelectorAll('.cyber-fade-up');
+
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const wordObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('cyber-words-visible');
+          wordObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.2 });
+
+      const fadeObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const delay = Number(entry.target.dataset.delay || 0);
+          entry.target.style.animationDelay = `${delay}s`;
+          entry.target.classList.add('cyber-is-visible');
+          fadeObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.15 });
+
+      cyberWords.forEach((el) => wordObserver.observe(el));
+      cyberFades.forEach((el) => fadeObserver.observe(el));
+    } else {
+      cyberWords.forEach((el) => el.classList.add('cyber-words-visible'));
+      cyberFades.forEach((el) => el.classList.add('cyber-is-visible'));
+    }
   }
 
   // Animated public network counter.
@@ -305,4 +401,243 @@
       }
     });
   }
+
+  // Interactive My Library 3D story ring.
+  const libraryRing = document.querySelector('#libraryRing');
+  const librarySection = document.querySelector('.story-library');
+
+  if (libraryRing && librarySection) {
+    const stories = [
+      {
+        image: './assets/images/nafis-portrait.webp',
+        alt: 'Hassan Abdi Hassan at the National Agri-Food Investment Summit 2026',
+        title: 'National Agri-Food Investment Summit',
+        type: 'REPRESENTATION',
+        meta: 'NAFIS 2026 · MOGADISHU',
+        text: 'A public-facing moment connecting university innovation work with Somalia’s agri-food ecosystem and investment conversations.'
+      },
+      {
+        image: './assets/images/prototyping.webp',
+        alt: 'Hassan working on an electronics prototype at Benadir University Innovation Hub',
+        title: 'I24 Prototype Build',
+        type: 'PROTOTYPING',
+        meta: 'BU INNOVATION HUB · AGRITECH',
+        text: 'Hands-on electronics work supporting the I24 Smart Grain Detector, combining sensors, embedded hardware and product research for safer grain storage.'
+      },
+      {
+        image: './assets/images/somes-speaking-1.webp',
+        alt: 'Hassan speaking during a Benadir University and SOMES partnership event',
+        title: 'Speaking & Partnership',
+        type: 'PUBLIC SPEAKING',
+        meta: 'BENADIR UNIVERSITY × SOMES',
+        text: 'A partnership setting where public speaking, evaluation, institutional learning and collaboration come together.'
+      },
+      {
+        image: './assets/images/workshop-stage.webp',
+        alt: 'Hassan presenting an innovation and technology session',
+        title: 'Innovation & Technology Session',
+        type: 'FACILITATION',
+        meta: 'BU INNOVATION HUB · DIGITAL SOMALIA',
+        text: 'Facilitating practical discussions that connect emerging technology with real local needs, opportunities and implementation.'
+      },
+      {
+        image: './assets/images/ai-course-mentoring.webp',
+        alt: 'Hassan mentoring learners during an AI and research course',
+        title: 'Hands-on AI Research Mentoring',
+        type: 'MENTORING',
+        meta: 'AI RESEARCH & DATA ANALYSIS',
+        text: 'Working directly with learners at their laptops, troubleshooting analysis workflows and helping turn theory into usable research skills.'
+      },
+      {
+        image: './assets/images/ai-course-attendance.webp',
+        alt: 'Hassan presenting an AI course attendance system',
+        title: 'Applied Course Systems',
+        type: 'DATA + AUTOMATION',
+        meta: 'AI COURSE · QR ATTENDANCE',
+        text: 'A practical teaching environment supported by digital attendance, structured exercises and data-driven course operations.'
+      },
+      {
+        image: './assets/images/team-partnership.webp',
+        alt: 'Team and partners at Benadir University Innovation Hub',
+        title: 'Partnerships & Shared Goals',
+        type: 'COLLABORATION',
+        meta: 'INNOVATION HUB · SDGs',
+        text: 'Innovation work is collaborative. This moment represents coordination, relationship-building and shared institutional goals.'
+      },
+      {
+        image: './assets/images/stakeholder-meeting.webp',
+        alt: 'Professional stakeholder meeting at Benadir University Innovation Hub',
+        title: 'Institutional Coordination',
+        type: 'STAKEHOLDER WORK',
+        meta: 'PLANNING · COORDINATION',
+        text: 'Supporting stakeholder discussions and professional coordination around programs, innovation and organizational priorities.'
+      },
+      {
+        image: './assets/images/leadership-dialogue.webp',
+        alt: 'Hassan contributing to a professional discussion',
+        title: 'Program Design Dialogue',
+        type: 'LEADERSHIP',
+        meta: 'STRATEGY · PROGRAM DESIGN',
+        text: 'A working-session moment representing the conversations behind program design, decision-making and practical implementation.'
+      },
+      {
+        image: './assets/images/participant-collaboration.webp',
+        alt: 'Participants collaborating during a practical workshop',
+        title: 'Peer Learning in Practice',
+        type: 'LEARNING',
+        meta: 'WORKSHOP · COLLABORATION',
+        text: 'Participants working together rather than passively listening: peer exchange, problem-solving and practical learning in the room.'
+      },
+      {
+        image: './assets/images/training-2.webp',
+        alt: 'Hassan facilitating a practical innovation workshop',
+        title: 'Training Room Facilitation',
+        type: 'FACILITATION',
+        meta: 'PRACTICAL LEARNING · BU IHUB',
+        text: 'Designing and leading sessions where participants work through innovation and technology challenges together.'
+      },
+      {
+        image: './assets/images/blue-shirt-speaking.webp',
+        alt: 'Hassan speaking during a youth-focused innovation session',
+        title: 'Youth-Focused Innovation',
+        type: 'SPEAKING',
+        meta: 'YOUTH · INNOVATION · DIGITAL SKILLS',
+        text: 'Communicating technology and innovation in a way that helps young people see concrete pathways into skills, tools and opportunities.'
+      }
+    ];
+
+    const storyImage = document.querySelector('#libraryStoryImage');
+    const storyIndex = document.querySelector('#libraryStoryIndex');
+    const storyType = document.querySelector('#libraryStoryType');
+    const storyTitle = document.querySelector('#libraryStoryTitle');
+    const storyText = document.querySelector('#libraryStoryText');
+    const storyMeta = document.querySelector('#libraryStoryMeta');
+    const storyOmni = document.querySelector('#libraryOmni');
+    const storyMedia = document.querySelector('.library-story-media');
+    const prev = document.querySelector('#libraryPrev');
+    const next = document.querySelector('#libraryNext');
+
+    const cards = stories.map((story, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'library-card';
+      button.dataset.storyIndex = String(index);
+      button.setAttribute('aria-label', `Open story: ${story.title}`);
+      button.innerHTML = `<img src="${story.image}" alt="" loading="lazy" decoding="async"><span>${String(index + 1).padStart(2, '0')} · ${story.type}</span>`;
+      button.querySelector('img').addEventListener('error', () => button.classList.add('broken'));
+      libraryRing.appendChild(button);
+      return button;
+    });
+
+    let selected = 0;
+    let phase = 0;
+    let targetPhase = null;
+    let last = performance.now();
+    let userLockUntil = 0;
+    const step = 360 / stories.length;
+    const radius = 780;
+    const cullAngle = 82;
+    const speed = 1.15;
+
+    const signedAngle = (value) => ((value % 360) + 540) % 360 - 180;
+
+    const updateStory = (index, smooth = true) => {
+      selected = (index + stories.length) % stories.length;
+      const story = stories[selected];
+
+      cards.forEach((card, i) => card.setAttribute('aria-current', i === selected ? 'true' : 'false'));
+      if (storyMedia && smooth) storyMedia.classList.add('is-changing');
+
+      window.setTimeout(() => {
+        if (storyImage) {
+          storyImage.src = story.image;
+          storyImage.alt = story.alt;
+        }
+        if (storyIndex) storyIndex.textContent = `${String(selected + 1).padStart(2, '0')} / ${String(stories.length).padStart(2, '0')}`;
+        if (storyType) storyType.textContent = story.type;
+        if (storyTitle) storyTitle.textContent = story.title;
+        if (storyText) storyText.textContent = story.text;
+        if (storyMeta) storyMeta.textContent = story.meta;
+        if (storyOmni) storyOmni.textContent = `portfolio://story/${String(selected + 1).padStart(2, '0')}`;
+        if (storyMedia) storyMedia.classList.remove('is-changing');
+      }, smooth ? 120 : 0);
+
+      if (matchMedia('(max-width: 720px)').matches) {
+        cards[selected]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+      }
+    };
+
+    const placeCards = () => {
+      const mobile = matchMedia('(max-width: 720px)').matches;
+      if (mobile) return;
+
+      cards.forEach((card, index) => {
+        const a = signedAngle(index * step + phase);
+        const abs = Math.abs(a);
+        if (abs > cullAngle) {
+          card.style.visibility = 'hidden';
+          card.style.pointerEvents = 'none';
+          return;
+        }
+        card.style.visibility = 'visible';
+        card.style.pointerEvents = 'auto';
+        const r = a * Math.PI / 180;
+        const c = Math.max(.2, Math.cos(r));
+        const z = radius * (1 - c);
+        const x = radius * Math.sin(r);
+        card.style.transform = `translate3d(${x}px,0,${z}px) rotateY(${-a}deg)`;
+        card.style.filter = `brightness(${Math.max(.66, 1 - abs / 135)})`;
+        card.style.opacity = String(Math.max(.38, 1 - abs / 115));
+        card.style.zIndex = String(100 - Math.round(abs));
+      });
+    };
+
+    const selectStory = (index, fromUser = false) => {
+      const normalized = (index + stories.length) % stories.length;
+      updateStory(normalized);
+      targetPhase = -normalized * step;
+      if (fromUser) userLockUntil = performance.now() + 8000;
+    };
+
+    cards.forEach((card, index) => card.addEventListener('click', () => selectStory(index, true)));
+    prev?.addEventListener('click', () => selectStory(selected - 1, true));
+    next?.addEventListener('click', () => selectStory(selected + 1, true));
+
+    librarySection.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') selectStory(selected - 1, true);
+      if (event.key === 'ArrowRight') selectStory(selected + 1, true);
+    });
+
+    const tickLibrary = (now) => {
+      const dt = Math.min((now - last) / 1000, .1);
+      last = now;
+
+      if (!reduceMotion && !matchMedia('(max-width: 720px)').matches) {
+        if (targetPhase !== null) {
+          const diff = signedAngle(targetPhase - phase);
+          phase += diff * Math.min(1, dt * 5.2);
+          if (Math.abs(diff) < .04) {
+            phase = targetPhase;
+            targetPhase = null;
+          }
+        } else if (now > userLockUntil) {
+          phase -= speed * dt;
+          const nearest = cards.reduce((best, _card, index) => {
+            const abs = Math.abs(signedAngle(index * step + phase));
+            return abs < best.abs ? { index, abs } : best;
+          }, { index: selected, abs: Infinity });
+          if (nearest.index !== selected && nearest.abs < step * .34) updateStory(nearest.index);
+        }
+      }
+
+      placeCards();
+      requestAnimationFrame(tickLibrary);
+    };
+
+    document.addEventListener('visibilitychange', () => { last = performance.now(); });
+    updateStory(0, false);
+    placeCards();
+    requestAnimationFrame(tickLibrary);
+  }
+
 })();
