@@ -80,42 +80,54 @@
     darkSections.forEach(s => headerObserver.observe(s));
   }
 
-  // Custom cursor for project/media surfaces. The RAF loop sleeps when the pointer settles.
-  const cursor = document.querySelector('.cursor');
-  if (cursor && finePointer && !reduceMotion) {
-    let tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty, cursorRaf = 0;
-    const follow = () => {
-      x += (tx - x) * .2;
-      y += (ty - y) * .2;
-      cursor.style.left = `${x}px`;
-      cursor.style.top = `${y}px`;
-      if (Math.abs(tx - x) > .15 || Math.abs(ty - y) > .15) cursorRaf = requestAnimationFrame(follow);
-      else cursorRaf = 0;
-    };
-    addEventListener('pointermove', (e) => {
-      tx = e.clientX;
-      ty = e.clientY;
-      if (!cursorRaf) cursorRaf = requestAnimationFrame(follow);
-    }, { passive: true });
-    document.querySelectorAll('.media-hover, .proof-card').forEach(el => {
-      el.addEventListener('pointerenter', () => cursor.classList.add('active'));
-      el.addEventListener('pointerleave', () => cursor.classList.remove('active'));
-    });
-  }
-
-  // Magnetic buttons.
+  // Futuristic pointer spotlight. Uses a single rAF per active surface and no idle loop.
   if (finePointer && !reduceMotion) {
-    document.querySelectorAll('.magnetic').forEach(el => {
-      el.addEventListener('pointermove', (e) => {
-        const r = el.getBoundingClientRect();
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        el.style.transform = `translate(${dx * .08}px,${dy * .08}px)`;
+    document.querySelectorAll('.case-card, .proof-card, .mini-project, .practice-media, .community-shot').forEach((el) => {
+      let pending = 0;
+      let px = 50;
+      let py = 50;
+      const paint = () => {
+        el.style.setProperty('--spot-x', `${px}%`);
+        el.style.setProperty('--spot-y', `${py}%`);
+        pending = 0;
+      };
+      el.addEventListener('pointermove', (event) => {
+        const rect = el.getBoundingClientRect();
+        px = ((event.clientX - rect.left) / rect.width) * 100;
+        py = ((event.clientY - rect.top) / rect.height) * 100;
+        if (!pending) pending = requestAnimationFrame(paint);
+      }, { passive: true });
+      el.addEventListener('pointerleave', () => {
+        if (pending) cancelAnimationFrame(pending);
+        pending = 0;
+        el.style.removeProperty('--spot-x');
+        el.style.removeProperty('--spot-y');
       });
-      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
     });
   }
 
+  // Highlight the section currently near the center of the viewport.
+  const navLinks = [...document.querySelectorAll('.topbar nav a[href^="#"]')];
+  const navTargets = navLinks
+    .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+    .filter((item) => item.section);
+  if (navTargets.length && 'IntersectionObserver' in window) {
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const match = navTargets.find((item) => item.section === entry.target);
+        if (!match) return;
+        match.link.classList.toggle('is-active', entry.isIntersecting);
+      });
+    }, { rootMargin: '-42% 0px -48% 0px', threshold: 0 });
+    navTargets.forEach((item) => navObserver.observe(item.section));
+  }
+
+  // Pause purely decorative CSS animation when the browser tab is hidden.
+  const syncVisibility = () => {
+    document.documentElement.classList.toggle('page-hidden', document.hidden);
+  };
+  document.addEventListener('visibilitychange', syncVisibility);
+  syncVisibility();
   // Pause continuous hero motion while it is off-screen to reduce unnecessary work.
   const hero = document.querySelector('.hero');
   if (hero && !reduceMotion && 'IntersectionObserver' in window) {
