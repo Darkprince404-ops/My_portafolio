@@ -71,3 +71,22 @@ After deployment, configure `DATABASE_URL` as an encrypted Vercel environment va
 This repository is intentionally standalone.
 
 **Only `Darkprince404-ops/My_portafolio` is modified by this portfolio project. Other Hassan repositories remain untouched.**
+
+
+## Backend
+
+The contact form is backed by Neon Postgres through `api/contact.js`.
+
+Required Vercel environment variable:
+
+```
+DATABASE_URL=<Neon connection string>
+```
+
+Database schema lives in `database/schema.sql`. Secrets are intentionally excluded from Git.
+
+## Current architecture
+
+```
+Browser → Vercel static portfolio → /api/contact → Neon Postgres
+```
