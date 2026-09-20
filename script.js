@@ -530,16 +530,19 @@
     });
 
     let selected = 0;
-    let phase = 0;
-    let targetPhase = null;
-    let last = performance.now();
+    let lastAuto = performance.now();
     let userLockUntil = 0;
-    const step = 360 / stories.length;
-    const radius = 780;
-    const cullAngle = 82;
-    const speed = 1.15;
+    const step = 11.5;
+    const radius = 430;
+    const cullAngle = 50;
 
-    const signedAngle = (value) => ((value % 360) + 540) % 360 - 180;
+    const wrappedDistance = (index, center) => {
+      let distance = index - center;
+      const half = stories.length / 2;
+      if (distance > half) distance -= stories.length;
+      if (distance < -half) distance += stories.length;
+      return distance;
+    };
 
     const updateStory = (index, smooth = true) => {
       selected = (index + stories.length) % stories.length;
@@ -561,10 +564,6 @@
         if (storyOmni) storyOmni.textContent = `portfolio://story/${String(selected + 1).padStart(2, '0')}`;
         if (storyMedia) storyMedia.classList.remove('is-changing');
       }, smooth ? 120 : 0);
-
-      if (matchMedia('(max-width: 720px)').matches) {
-        cards[selected]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
-      }
     };
 
     const placeCards = () => {
@@ -572,31 +571,43 @@
       if (mobile) return;
 
       cards.forEach((card, index) => {
-        const a = signedAngle(index * step + phase);
+        const relative = wrappedDistance(index, selected);
+        const a = relative * step;
         const abs = Math.abs(a);
+
         if (abs > cullAngle) {
           card.style.visibility = 'hidden';
           card.style.pointerEvents = 'none';
           return;
         }
+
         card.style.visibility = 'visible';
         card.style.pointerEvents = 'auto';
+
         const r = a * Math.PI / 180;
-        const c = Math.max(.2, Math.cos(r));
-        const z = radius * (1 - c);
+        const c = Math.max(.35, Math.cos(r));
         const x = radius * Math.sin(r);
-        card.style.transform = `translate3d(${x}px,0,${z}px) rotateY(${-a}deg)`;
-        card.style.filter = `brightness(${Math.max(.66, 1 - abs / 135)})`;
-        card.style.opacity = String(Math.max(.38, 1 - abs / 115));
-        card.style.zIndex = String(100 - Math.round(abs));
+        const z = radius * (1 - c);
+        const depthScale = relative === 0 ? 1.07 : Math.max(.83, 1 - abs / 250);
+
+        card.style.transform = `translate3d(${x}px,0,${z}px) rotateY(${-a}deg) scale(${depthScale})`;
+        card.style.filter = `brightness(${Math.max(.72, 1 - abs / 155)})`;
+        card.style.opacity = String(Math.max(.54, 1 - abs / 120));
+        card.style.zIndex = String(relative === 0 ? 140 : 100 - Math.round(abs));
       });
     };
 
     const selectStory = (index, fromUser = false) => {
       const normalized = (index + stories.length) % stories.length;
       updateStory(normalized);
-      targetPhase = -normalized * step;
-      if (fromUser) userLockUntil = performance.now() + 8000;
+      placeCards();
+      if (fromUser) {
+        userLockUntil = performance.now() + 9000;
+        if (matchMedia('(max-width: 720px)').matches) {
+          cards[normalized]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+      lastAuto = performance.now();
     };
 
     cards.forEach((card, index) => card.addEventListener('click', () => selectStory(index, true)));
@@ -609,32 +620,16 @@
     });
 
     const tickLibrary = (now) => {
-      const dt = Math.min((now - last) / 1000, .1);
-      last = now;
-
-      if (!reduceMotion && !matchMedia('(max-width: 720px)').matches) {
-        if (targetPhase !== null) {
-          const diff = signedAngle(targetPhase - phase);
-          phase += diff * Math.min(1, dt * 5.2);
-          if (Math.abs(diff) < .04) {
-            phase = targetPhase;
-            targetPhase = null;
-          }
-        } else if (now > userLockUntil) {
-          phase -= speed * dt;
-          const nearest = cards.reduce((best, _card, index) => {
-            const abs = Math.abs(signedAngle(index * step + phase));
-            return abs < best.abs ? { index, abs } : best;
-          }, { index: selected, abs: Infinity });
-          if (nearest.index !== selected && nearest.abs < step * .34) updateStory(nearest.index);
+      if (!reduceMotion && !matchMedia('(max-width: 720px)').matches && !document.hidden) {
+        if (now > userLockUntil && now - lastAuto > 5200) {
+          selectStory(selected + 1, false);
+          lastAuto = now;
         }
       }
-
-      placeCards();
       requestAnimationFrame(tickLibrary);
     };
 
-    document.addEventListener('visibilitychange', () => { last = performance.now(); });
+    document.addEventListener('visibilitychange', () => { lastAuto = performance.now(); });
     updateStory(0, false);
     placeCards();
     requestAnimationFrame(tickLibrary);
