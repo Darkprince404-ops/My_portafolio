@@ -385,3 +385,8 @@ footer { display:flex; justify-content:space-between; gap:20px; border-top:1px s
   .more-builds-head { align-items: start; flex-direction: column; gap: 7px; }
   .mini-build { min-height: 220px; }
 }
+
+
+/* Keep in-page navigation clear of the fixed header. */
+section[id] { scroll-margin-top: 96px; }
+@media (max-width: 820px) { section[id] { scroll-margin-top: 82px; } }
