@@ -289,10 +289,45 @@
       <div class="section-kicker light" data-reveal>08 / Contact</div>
       <h2 data-reveal>Have a data, AI or digital problem worth solving?</h2>
       <p data-reveal>I’m interested in strong roles, consulting work, research collaborations and technology projects where execution matters.</p>
-      <div class="contact-actions" data-reveal>
-        <a class="button light magnetic" href="mailto:hassanabdihassan21@gmail.com">hassanabdihassan21@gmail.com <span>↗</span></a>
-        <a class="button outline-light magnetic" href="https://www.linkedin.com/in/hassan-abdi-hassan-b4902a30b" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a class="button outline-light magnetic" href="https://github.com/Darkprince404-ops" target="_blank" rel="noreferrer">GitHub</a>
+
+      <div class="contact-layout" data-reveal>
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-row">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" maxlength="120" required placeholder="Your name" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" maxlength="180" required placeholder="you@example.com" />
+            </label>
+          </div>
+          <label>
+            <span>Subject</span>
+            <input type="text" name="subject" maxlength="180" placeholder="Project, role or collaboration" />
+          </label>
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="5" maxlength="5000" required placeholder="Tell me what you’re working on…"></textarea>
+          </label>
+          <label class="hp-field" aria-hidden="true">
+            <span>Website</span>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+          <div class="form-footer">
+            <button class="button light magnetic" type="submit">Send message <span>↗</span></button>
+            <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div class="contact-direct">
+          <span class="contact-direct-kicker">Prefer direct contact?</span>
+          <a href="mailto:hassanabdihassan21@gmail.com">hassanabdihassan21@gmail.com</a>
+          <div class="contact-actions">
+            <a class="button outline-light magnetic" href="https://www.linkedin.com/in/hassan-abdi-hassan-b4902a30b" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="button outline-light magnetic" href="https://github.com/Darkprince404-ops" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
       </div>
       <footer>
         <span>© 2026 Hassan Abdi Hassan</span>
