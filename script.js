@@ -1,12 +1,18 @@
 (() => {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(pointer: fine)').matches;
+  const coarsePointer = matchMedia('(pointer: coarse)').matches;
+  const compactViewport = matchMedia('(max-width: 860px)').matches;
 
   // Intro loader.
   const loader = document.querySelector('.page-loader');
   if (loader) {
     if (reduceMotion) loader.remove();
-    else setTimeout(() => loader.classList.add('done'), 1250);
+    else {
+      const loaderDelay = compactViewport ? 760 : 1050;
+      setTimeout(() => loader.classList.add('done'), loaderDelay);
+      setTimeout(() => loader.remove(), loaderDelay + 1050);
+    }
   }
 
   // Split selected copy into animated word wrappers.
@@ -45,13 +51,19 @@
   // Scroll meter and header contrast.
   const meter = document.querySelector('.scroll-meter span');
   const topbar = document.querySelector('#topbar');
+  const portraitFrame = document.querySelector('.portrait-frame');
   const darkSections = document.querySelectorAll('.work-section, .timeline-section, .voice-section, .contact-section');
+  const parallaxEnabled = Boolean(portraitFrame && finePointer && !reduceMotion && !compactViewport);
   let raf = 0;
 
   const updateScroll = () => {
     const y = window.scrollY;
     const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
     if (meter) meter.style.width = `${Math.min(100, y / max * 100)}%`;
+    if (parallaxEnabled) {
+      const shift = Math.min(640, y) * 0.04;
+      portraitFrame.style.setProperty('--portrait-shift', `${shift.toFixed(1)}px`);
+    }
     raf = 0;
   };
   addEventListener('scroll', () => {
@@ -68,19 +80,23 @@
     darkSections.forEach(s => headerObserver.observe(s));
   }
 
-  // Custom cursor for project/media surfaces.
+  // Custom cursor for project/media surfaces. The RAF loop sleeps when the pointer settles.
   const cursor = document.querySelector('.cursor');
   if (cursor && finePointer && !reduceMotion) {
-    let tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty;
-    addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    let tx = innerWidth / 2, ty = innerHeight / 2, x = tx, y = ty, cursorRaf = 0;
     const follow = () => {
-      x += (tx - x) * .16;
-      y += (ty - y) * .16;
+      x += (tx - x) * .2;
+      y += (ty - y) * .2;
       cursor.style.left = `${x}px`;
       cursor.style.top = `${y}px`;
-      requestAnimationFrame(follow);
+      if (Math.abs(tx - x) > .15 || Math.abs(ty - y) > .15) cursorRaf = requestAnimationFrame(follow);
+      else cursorRaf = 0;
     };
-    follow();
+    addEventListener('pointermove', (e) => {
+      tx = e.clientX;
+      ty = e.clientY;
+      if (!cursorRaf) cursorRaf = requestAnimationFrame(follow);
+    }, { passive: true });
     document.querySelectorAll('.media-hover, .proof-card').forEach(el => {
       el.addEventListener('pointerenter', () => cursor.classList.add('active'));
       el.addEventListener('pointerleave', () => cursor.classList.remove('active'));
@@ -100,13 +116,13 @@
     });
   }
 
-  // Gentle parallax on hero portrait.
-  const heroPortrait = document.querySelector('.hero-portrait');
-  if (heroPortrait && !reduceMotion) {
-    addEventListener('scroll', () => {
-      const y = Math.min(650, window.scrollY);
-      heroPortrait.style.transform = `translate3d(0,${y * .055}px,0)`;
-    }, { passive: true });
+  // Pause continuous hero motion while it is off-screen to reduce unnecessary work.
+  const hero = document.querySelector('.hero');
+  if (hero && !reduceMotion && 'IntersectionObserver' in window) {
+    const heroMotionObserver = new IntersectionObserver(([entry]) => {
+      hero.classList.toggle('motion-paused', !entry.isIntersecting);
+    }, { rootMargin: '120px 0px 120px 0px', threshold: 0 });
+    heroMotionObserver.observe(hero);
   }
 
   // Animated public network counter.
@@ -143,7 +159,7 @@
     photos.forEach((p, i) => p.classList.toggle('active', i === index));
     if (fieldIndex) fieldIndex.textContent = String(index + 1).padStart(2, '0');
   };
-  if (notes.length && 'IntersectionObserver' in window) {
+  if (notes.length && 'IntersectionObserver' in window && !coarsePointer) {
     const fieldObserver = new IntersectionObserver((entries) => {
       const best = entries
         .filter(e => e.isIntersecting)
@@ -151,6 +167,8 @@
       if (best) activateField(Number(best.target.dataset.target));
     }, { threshold: [.25,.45,.65], rootMargin: '-18% 0px -24% 0px' });
     notes.forEach(n => fieldObserver.observe(n));
+  } else if (notes.length) {
+    activateField(0);
   }
 
   // Case study dialog.
