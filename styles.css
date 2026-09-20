@@ -340,6 +340,7 @@ section[id]{scroll-margin-top:90px}
 }
 @media (max-width:520px){
   .topbar nav .nav-pill{padding:8px 10px}
+  .grain{display:none}
   .orbit-a{width:58px;height:58px;left:-14px}
   .orbit-b{width:46px;height:46px;right:-8px}
   .orbit-c{width:62px;height:62px;right:4px}
