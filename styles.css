@@ -1826,3 +1826,211 @@ img,svg,video,canvas{max-width:100%}
   .contact-copy .display{font-size:1.82rem}
   .library-ring{gap:9px;padding-right:37vw}
 }
+
+
+/* HARD MOBILE CASE CARD RESET
+   Explicitly abandons the desktop CSS grid on touch/small layouts. */
+@media (max-width:860px){
+  .work-section .case-list{
+    width:calc(100% - 18px);
+    margin-inline:auto;
+    gap:12px;
+  }
+
+  .work-section .case-card{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    grid-template-columns:none !important;
+    grid-template-rows:none !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:18px !important;
+    gap:16px !important;
+    overflow:hidden;
+  }
+
+  .work-section .case-card > .case-num,
+  .work-section .case-card > .case-main,
+  .work-section .case-card > .case-visual,
+  .work-section .case-card > .case-open{
+    grid-column:auto !important;
+    grid-row:auto !important;
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    align-self:stretch !important;
+  }
+
+  .work-section .case-num{
+    width:auto !important;
+    font-size:1rem !important;
+    line-height:1;
+  }
+
+  .work-section .case-main{
+    display:block !important;
+  }
+
+  .work-section .case-kicker{
+    display:block;
+    max-width:100%;
+    white-space:normal;
+    overflow-wrap:normal;
+    word-break:normal;
+    font-size:.58rem;
+    line-height:1.45;
+    letter-spacing:.12em;
+  }
+
+  .work-section .case-main h3{
+    width:100% !important;
+    max-width:100% !important;
+    margin:8px 0 12px !important;
+    font-size:clamp(1.7rem,6.6vw,2.35rem) !important;
+    line-height:.98 !important;
+    letter-spacing:-.045em !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+    hyphens:none !important;
+  }
+
+  .work-section .case-main p{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 0 14px !important;
+    font-size:.78rem !important;
+    line-height:1.52 !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+  }
+
+  .work-section .case-tags{
+    width:100%;
+    gap:6px;
+  }
+
+  .work-section .case-tags span{
+    font-size:.52rem;
+    padding:6px 8px;
+  }
+
+  .work-section .case-visual{
+    order:4;
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    aspect-ratio:16 / 10;
+    border-radius:16px !important;
+  }
+
+  .work-section .case-photo img{
+    position:absolute;
+    inset:0;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover;
+  }
+
+  .work-section .visual-terminal{
+    padding:20px !important;
+    align-content:center;
+  }
+
+  .work-section .visual-terminal code{
+    font-size:.72rem !important;
+    line-height:1.65 !important;
+  }
+
+  .work-section .visual-metrics{
+    padding:20px !important;
+  }
+
+  .work-section .metric-big{
+    font-size:clamp(3rem,14vw,5rem) !important;
+  }
+
+  .work-section .metric-bars{
+    height:64px !important;
+    margin-top:16px !important;
+  }
+
+  .work-section .case-open{
+    order:5;
+    position:static !important;
+    width:max-content !important;
+    min-width:0 !important;
+    align-self:flex-start !important;
+    margin:0 !important;
+    padding:9px 12px !important;
+    font-size:.58rem !important;
+  }
+}
+
+@media (max-width:600px){
+  .work-intro{
+    width:calc(100% - 20px);
+    padding-top:48px;
+    padding-bottom:28px;
+  }
+
+  .work-intro .display{
+    font-size:clamp(2rem,9.4vw,2.65rem) !important;
+    line-height:.98;
+    letter-spacing:-.055em;
+  }
+
+  .work-intro-copy{
+    max-width:100%;
+    font-size:.75rem !important;
+    line-height:1.5;
+  }
+
+  .work-section .case-list{
+    width:calc(100% - 12px);
+  }
+
+  .work-section .case-card{
+    padding:15px !important;
+    gap:13px !important;
+    border-radius:18px !important;
+  }
+
+  .work-section .case-main h3{
+    font-size:clamp(1.55rem,7.9vw,2rem) !important;
+    line-height:1 !important;
+  }
+
+  .work-section .case-main p{
+    font-size:.72rem !important;
+  }
+
+  .work-section .case-visual{
+    aspect-ratio:4 / 3;
+    border-radius:14px !important;
+  }
+
+  .work-section .visual-terminal{
+    padding:16px !important;
+  }
+
+  .work-section .visual-terminal code{
+    font-size:.64rem !important;
+  }
+}
+
+@media (max-width:390px){
+  .work-intro .display{
+    font-size:1.9rem !important;
+  }
+
+  .work-section .case-card{
+    padding:13px !important;
+  }
+
+  .work-section .case-main h3{
+    font-size:1.48rem !important;
+  }
+}
