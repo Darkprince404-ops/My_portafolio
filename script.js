@@ -567,7 +567,7 @@
     };
 
     const placeCards = () => {
-      const mobile = matchMedia('(max-width: 720px)').matches;
+      const mobile = matchMedia('(max-width: 820px)').matches;
       if (mobile) return;
 
       cards.forEach((card, index) => {
@@ -603,7 +603,7 @@
       placeCards();
       if (fromUser) {
         userLockUntil = performance.now() + 9000;
-        if (matchMedia('(max-width: 720px)').matches) {
+        if (matchMedia('(max-width: 820px)').matches) {
           cards[normalized]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
         }
       }
@@ -620,7 +620,7 @@
     });
 
     const tickLibrary = (now) => {
-      if (!reduceMotion && !matchMedia('(max-width: 720px)').matches && !document.hidden) {
+      if (!reduceMotion && !matchMedia('(max-width: 820px)').matches && !document.hidden) {
         if (now > userLockUntil && now - lastAuto > 5200) {
           selectStory(selected + 1, false);
           lastAuto = now;
