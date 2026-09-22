@@ -2034,3 +2034,6 @@ img,svg,video,canvas{max-width:100%}
     font-size:1.48rem !important;
   }
 }
+
+
+/* production deploy trigger: mobile layout fix 2026-09-22 */
