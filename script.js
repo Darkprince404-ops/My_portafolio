@@ -281,49 +281,65 @@
 
   // Case study dialog.
   const cases = {
-    b24: {
-      kicker: 'EDTECH / AI / FULL-STACK',
-      title: 'B24 Learning Assistant & Student Portal',
-      lede: 'A university learning system that combines student operations with an AI tutor, voice interaction, interactive learning surfaces and anatomy-focused educational experiences.',
-      problem: 'Student information, learning materials, tutoring and academic workflows often live in separate systems. The goal was to create one coherent student workspace rather than another isolated chatbot.',
-      contribution: 'Product framing, UI direction, iterative development, AI interaction design, testing and deployment workflows across the portal and assistant experience.',
-      stack: 'React 19, TypeScript, Vite, NestJS, Prisma, JWT, Three.js, Framer Motion and AI integrations.',
-      result: 'A working platform spanning protected dashboards, attendance, fees, course materials, quizzes, calendar, chat and interactive AI learning experiences.',
-      link: 'mailto:hassanabdihassan21@gmail.com?subject=Request%20B24%20private%20demo',
-      linkLabel: 'Request private demo ↗'
-    },
-    bossbaby: {
-      kicker: 'ERP / POS / OPERATIONS',
-      title: 'Boss Baby Retail Operating System',
-      lede: 'A production-oriented operating system for retail workflows, with the data integrity and controls needed to move beyond a simple checkout screen.',
-      problem: 'Inventory, expenses, supplier operations and sales reconciliation become unreliable when each workflow lives in a disconnected spreadsheet or informal process.',
-      contribution: 'Product development, POS and inventory workflows, reporting logic, data migration, quality gates, deployment and iterative operational fixes.',
-      stack: 'Next.js, PostgreSQL, role-based access, reporting/BI, audit trails and deployment workflows.',
-      result: 'A system covering variant inventory, POS, supplier workflows, credit, returns, transfers, expenses, fiscal reporting and legacy Excel migration.',
-      link: 'mailto:hassanabdihassan21@gmail.com?subject=Request%20Boss%20Baby%20private%20demo',
-      linkLabel: 'Request private demo ↗'
-    },
     i24: {
-      kicker: 'AGRITECH / IOT / PRODUCT RESEARCH',
+      kicker: 'AGRITECH / DIGITAL MONITORING / PROTOTYPE',
       title: 'I24 Smart Grain Detector',
-      lede: 'An applied agritech concept for detecting risky grain-storage conditions before loss becomes visible.',
-      problem: 'Storage losses can develop from temperature, humidity, grain moisture, internal-air changes and pest activity without a simple monitoring layer for farmers and storage operators.',
-      contribution: 'Research synthesis, product framing, sensor architecture, cost modelling, dashboard concept, market positioning and prototype support.',
-      stack: 'ESP32, temperature/humidity, grain-moisture, air-quality/CO₂ proxy, acoustic/pest, level and tamper sensing.',
-      result: 'A prototype direction designed for Somali storage contexts, with dashboard alerts and an expansion path from local users to East African markets.',
-      link: 'https://github.com/Darkprince404-ops',
-      linkLabel: 'Explore GitHub ↗'
+      lede: 'A prototype-stage digital monitoring concept designed to make changing grain-storage conditions easier to observe before deterioration becomes obvious.',
+      role: 'Project founder: Abbas Abdullahi Sharif. Hassan’s contribution is research and product support, including problem framing, evidence synthesis, sensor-architecture exploration, cost modelling, dashboard thinking and market positioning. Hassan is not presented as the founder.',
+      problem: 'Post-harvest grain storage conditions can deteriorate without timely monitoring. Temperature, humidity, grain moisture, internal-air changes, insect activity, fill level and opening/tamper events can all matter, but users may lack a simple monitoring layer.',
+      approach: 'Translate the storage problem into a multi-input monitoring concept, identify practical sensing options, connect readings to a digital dashboard and frame alerts around user decisions rather than raw sensor values alone.',
+      tools: 'ESP32; SHT31 temperature/humidity sensing; grain-moisture sensing; environmental/air indicators; acoustic insect-activity concepts; level monitoring; tamper/opening detection; dashboard prototyping.',
+      implementation: 'Research and prototype support focused on a modular, low-cost concept suitable for Somali storage contexts, with attention to hardware choices, user needs, dashboard presentation and possible future scaling.',
+      result: 'A documented prototype direction and dashboard concept. The project remains at prototype/concept stage; this portfolio does not claim commercial deployment, validated loss reduction or proven field impact.',
+      adoption: 'The concept is framed around understandable alerts and practical recommendations so farmers or storage operators can act on information instead of interpreting raw sensor data.',
+      stage: 'Prototype / concept development',
+      link: 'mailto:hassanabdihassan21@gmail.com?subject=I24%20portfolio%20case',
+      linkLabel: 'Discuss the case ↗'
+    },
+    training: {
+      kicker: 'DIGITAL SYSTEMS / TRAINING OPERATIONS / USER ADOPTION',
+      title: 'Digital Training & Attendance Workflow',
+      lede: 'A practical programme-operations workflow supporting participant records, attendance, assessments and day-to-day user support for an AI, research and data-analysis training programme.',
+      role: 'Programme coordination, facilitation and digital-workflow support through Benadir University Innovation Hub.',
+      problem: 'Running a hands-on training programme requires more than teaching. Participant lists, check-in, attendance status, assessments, follow-up and troubleshooting need to stay organised without creating unnecessary manual work.',
+      approach: 'Structure participant records, use QR-based check-in, monitor attendance, coordinate assessment workflows and support learners when devices, forms or course processes create friction.',
+      tools: 'QR-based attendance; structured participant records; spreadsheets; digital forms; R learning workflows; presentation and training materials; communication and follow-up processes.',
+      implementation: 'The workflow supported registration and attendance operations alongside practical teaching, assessment coordination, troubleshooting and participant-facing communication.',
+      result: 'A more structured programme-operations process with clearer attendance records, easier follow-up and a practical link between training delivery and digital administration. No unverified participation or performance metrics are claimed here.',
+      adoption: 'Training, onboarding, clear instructions, troubleshooting and participant support were treated as part of the system rather than afterthoughts.',
+      stage: 'Implemented programme workflow',
+      link: 'mailto:hassanabdihassan21@gmail.com?subject=Digital%20training%20workflow',
+      linkLabel: 'Discuss programme systems ↗'
     },
     research: {
       kicker: 'RESEARCH / DATA / M&E',
-      title: 'Quantitative Research Systems',
-      lede: 'A repeatable workflow for turning field instruments and raw responses into defensible analysis and decision-ready reporting.',
-      problem: 'Research quality can break at any stage: questionnaire design, enumerator workflow, missing data, inconsistent coding, inappropriate tests or weak interpretation.',
-      contribution: 'Questionnaire design, KoboToolbox setup, sample planning, field-QC logic, cleaning, reliability testing, descriptive statistics, regression, visualization and reporting.',
-      stack: 'R, Stata, Excel, KoboToolbox, survey QA and statistical reporting.',
-      result: 'Applied across youth participation, public-health, IDP, education and development studies, with a focus on transparent analysis and practical interpretation.',
+      title: 'Research & Survey Data Systems',
+      lede: 'A repeatable field-to-report workflow for turning digital survey responses into cleaner evidence and clearer decisions.',
+      role: 'Research support, survey/data workflow design, field monitoring, quality control, data management and quantitative analysis across development and public-health work.',
+      problem: 'Research quality can fail at multiple points: instrument design, digital collection, enumerator practice, missing or inconsistent records, weak cleaning, inappropriate analysis or unclear interpretation.',
+      approach: 'Design structured instruments, configure digital collection, monitor submissions, flag quality issues, support corrections and callbacks where appropriate, clean data, run suitable analysis and communicate findings transparently.',
+      tools: 'KoboToolbox; XLSForm; Excel; R; Stata; SPSS; descriptive statistics; reliability checks; regression and data visualisation where appropriate.',
+      implementation: 'The workflow follows a clear chain: survey design → digital collection → field monitoring → quality control → cleaning → analysis → visualisation → reporting.',
+      result: 'Applied research and data-support workflows that improve traceability between the field instrument, cleaned dataset, statistical output and final interpretation while protecting participant confidentiality.',
+      adoption: 'Field guidance, enumerator support, clear validation logic and feedback loops help the data system work under real operating conditions.',
+      stage: 'Applied research / data operations',
       link: 'mailto:hassanabdihassan21@gmail.com?subject=Research%20and%20data%20collaboration',
       linkLabel: 'Discuss a research project ↗'
+    },
+    innovation: {
+      kicker: 'INNOVATION / BUSINESS DEVELOPMENT / PROGRAMMES',
+      title: 'Innovation Hub Programme Implementation',
+      lede: 'Programme delivery at the intersection of innovation, entrepreneurship, business development, training, stakeholder engagement and practical digital systems.',
+      role: 'Head of Innovations and Business Development, Benadir University Innovation Hub, 2023–Present.',
+      problem: 'Innovation programmes need coordinated delivery across participants, university teams, partners, trainers, communications, documentation and follow-up. Strong ideas alone do not create a functioning programme.',
+      approach: 'Connect programme design with partner outreach, workshops, entrepreneurship support, participant workflows, proposals, presentations, documentation, events and implementation follow-up.',
+      tools: 'Programme plans; stakeholder coordination; participant records; presentations; digital forms and tracking workflows; proposal/concept development; event and training materials.',
+      implementation: 'Work spans programme design, innovation activities, business development, training coordination, stakeholder engagement, partner outreach, research/data support, workshops, events, proposals, communications and knowledge products.',
+      result: 'A practical implementation role that links institutional priorities to participant-facing programmes, partner engagement and documented outputs without separating “technology” from the people and processes needed to use it.',
+      adoption: 'Workshops, onboarding, facilitation, participant communication and follow-up are used to make programme tools and processes understandable and usable.',
+      stage: 'Ongoing professional role',
+      link: 'mailto:hassanabdihassan21@gmail.com?subject=Innovation%20and%20business%20development',
+      linkLabel: 'Discuss programme work ↗'
     }
   };
 
@@ -339,11 +355,15 @@
         <span class="dialog-kicker">${item.kicker}</span>
         <h2 class="dialog-title">${item.title}</h2>
         <p class="dialog-lede">${item.lede}</p>
-        <div class="dialog-grid">
+        <div class="dialog-stage">STAGE · ${item.stage}</div>
+        <div class="dialog-grid dialog-grid-evidence">
+          <div class="dialog-block dialog-block-wide"><span>Hassan’s role</span><p>${item.role}</p></div>
           <div class="dialog-block"><span>Problem</span><p>${item.problem}</p></div>
-          <div class="dialog-block"><span>My contribution</span><p>${item.contribution}</p></div>
-          <div class="dialog-block"><span>Stack / method</span><p>${item.stack}</p></div>
-          <div class="dialog-block"><span>Outcome</span><p>${item.result}</p></div>
+          <div class="dialog-block"><span>Solution / approach</span><p>${item.approach}</p></div>
+          <div class="dialog-block"><span>Tools</span><p>${item.tools}</p></div>
+          <div class="dialog-block"><span>Implementation</span><p>${item.implementation}</p></div>
+          <div class="dialog-block"><span>Result / output</span><p>${item.result}</p></div>
+          <div class="dialog-block"><span>User adoption</span><p>${item.adoption}</p></div>
         </div>
         <a class="dialog-link" href="${item.link}" ${item.link.startsWith('http') ? 'target="_blank" rel="noreferrer"' : ''}>${item.linkLabel}</a>
       </div>
@@ -422,7 +442,7 @@
         title: 'I24 Prototype Build',
         type: 'PROTOTYPING',
         meta: 'BU INNOVATION HUB · AGRITECH',
-        text: 'Hands-on electronics work supporting the I24 Smart Grain Detector, combining sensors, embedded hardware and product research for safer grain storage.'
+        text: 'Prototype-support work around founder Abbas Abdullahi Sharif’s I24 Smart Grain Detector concept, connecting storage research, sensing options, hardware exploration and product thinking.'
       },
       {
         image: './assets/images/somes-speaking-1.webp',
@@ -454,7 +474,7 @@
         title: 'Applied Course Systems',
         type: 'DATA + AUTOMATION',
         meta: 'AI COURSE · QR ATTENDANCE',
-        text: 'A practical teaching environment supported by digital attendance, structured exercises and data-driven course operations.'
+        text: 'A practical teaching environment supported by QR-based attendance, structured participant records, assessment coordination, troubleshooting and day-to-day programme operations.'
       },
       {
         image: './assets/images/team-partnership.webp',
