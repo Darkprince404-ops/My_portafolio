@@ -2197,3 +2197,13 @@ img,svg,video,canvas{max-width:100%}
 @media (prefers-reduced-motion:reduce){
   .hero-action{transition:none}
 }
+
+
+/* Specificity fix: keep case actions compact on touch layouts. */
+@media (max-width:860px){
+  .work-section .case-card > .case-open{
+    width:max-content!important;
+    max-width:100%!important;
+    align-self:flex-start!important;
+  }
+}
